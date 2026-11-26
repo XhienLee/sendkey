@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <title>Sendkey: send a file once</title>
+    <meta name="theme-color" content="#E6F0FF" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#12141C" media="(prefers-color-scheme: dark)">
+    <meta name="description" content="Send a file through a link that works once. It is locked in your browser first.">
+    <link rel="icon" href="icons/icon-192.png" type="image/png">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="family/family.css">
+    <script type="module" src="app.js"></script>
+</head>
+<body>
+<header class="bar">
+    <a href="./" class="brand">Sendkey</a>
+</header>
+<main class="page">
+    <section id="view-send" class="stack">
+        <div>
+            <h1>Send a file once</h1>
+            <p class="lead">Your browser locks the file first, so the server only holds scrambled data. The link works one time, then the file is deleted.</p>
+        </div>
+        <div class="card">
+            <p class="alert" id="send-alert" role="alert" hidden></p>
+            <p class="label">The file (up to 25 MB)</p>
+            <div class="pick">
+                <button type="button" class="btn btn-line btn-small" id="pick">Choose file</button>
+                <span class="small" id="pick-name"></span>
+                <input class="sr-only" type="file" id="file" tabindex="-1" aria-label="Choose the file to send">
+            </div>
+            <label class="label" for="ttl">The link lasts</label>
+            <select class="field" id="ttl">
+                <option value="3600">1 hour</option>
+                <option value="86400" selected>1 day</option>
+                <option value="604800">7 days</option>
+            </select>
+            <fieldset class="method">
+                <legend class="label">How does the key travel?</legend>
+                <label class="method-option"><input type="radio" name="mode" value="link" checked><span><span class="method-title">Inside the link</span><span class="method-text">One thing to send. Anyone who gets the whole link can open it.</span></span></label>
+                <label class="method-option"><input type="radio" name="mode" value="apart"><span><span class="method-title">Sent separately</span><span class="method-text">Safer. You send the link one way and the 6-word key another.</span></span></label>
+            </fieldset>
+            <button type="button" class="btn btn-main btn-wide" id="send">Lock it and make the link</button>
+        </div>
+        <div class="card" id="sent" hidden>
+            <p class="alert alert-ok" role="status">Your link is ready. It works once.</p>
+            <p class="label">The link</p>
+            <textarea class="field mono linkbox" id="link" rows="3" readonly aria-label="The link"></textarea>
+            <div class="copy-row"><button type="button" class="btn btn-line btn-small" id="copy-link">Copy link</button></div>
+            <div id="apart" hidden>
+                <p class="label">The key. Send it a different way than the link</p>
+                <ol class="key" id="words" aria-label="The 6-word key"></ol>
+                <div class="copy-row"><button type="button" class="btn btn-line btn-small" id="copy-key">Copy key</button></div>
+            </div>
+            <p class="note" id="expires"></p>
+        </div>
+    </section>
+
+    <section id="view-get" class="stack" hidden>
+        <div>
+            <h1>Someone sent you a file</h1>
+            <p class="lead">The link works once. Check the key first: it doesn't use up the link.</p>
+        </div>
+        <div class="card">
+            <p class="alert" id="get-alert" role="alert" hidden></p>
+            <div id="need-key">
+                <label class="label" for="key">The 6-word key</label>
+                <input class="field mono" id="key" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="tiger-mango-velvet-…">
+            </div>
+            <button type="button" class="btn btn-main btn-wide" id="check">Check the key</button>
+            <div id="found" hidden>
+                <div class="file-card file-card-boxed">
+                    <span class="badge" aria-hidden="true">FILE</span>
+                    <span class="file-card-text"><span class="mono" id="found-name"></span><span class="ok small" id="found-size"></span></span>
+                </div>
+                <p class="note">Downloading uses up the link. After this, nobody can get the file again.</p>
+                <button type="button" class="btn btn-main btn-wide" id="download">Download the file</button>
+            </div>
+            <p class="alert alert-ok" id="got" role="status" hidden></p>
+        </div>
+    </section>
+</main>
+<footer class="footer">
+    <div class="footer-in">
+        <span>Made by Ninth Life Labs</span>
+        <span><a href="https://github.com/XhienLee/sendkey" rel="noreferrer">Source code</a></span>
+    </div>
+</footer>
+</body>
+</html>
